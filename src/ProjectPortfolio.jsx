@@ -126,17 +126,12 @@ const ProjectPortfolio = () => {
         <div className="mx-auto px-4 md:px-16 lg:px-24 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-12">
             <Link to="/" className="flex items-center group cursor-pointer">
-              <img src="/assets/logo/otdlogo.png" alt="Logo" className="h-9 w-auto" />
-              
+              <div className="bg-white p-1.5 rounded-xl shadow-sm">
+                <img src="/assets/logo/otdlogo.png" alt="Logo" className="h-7 w-auto mix-blend-multiply" />
+              </div>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className={`hidden lg:flex space-x-8 text-[11px] font-bold uppercase tracking-[0.2em] transition-colors ${scrollY > 50 ? 'text-gray-400' : 'text-outdid-blue/60'}`}>
-              <Link to="/" className="hover:text-outdid-amber transition-colors">Home</Link>
-              <a href="https://ionhive.in/" target="_blank" rel="noopener noreferrer" className="hover:text-outdid-amber transition-colors">Outdid Hub</a>
-              <Link to="/" className="hover:text-outdid-amber transition-colors">About</Link>
-              <Link to="/" className="hover:text-outdid-amber transition-colors">Career</Link>
-            </nav>
+           
           </div>
 
           <div className="flex items-center space-x-6">
@@ -488,7 +483,9 @@ const ProjectPortfolio = () => {
 
       <footer className="bg-[#020812] py-24 text-center border-t border-white/5">
         <div className="container mx-auto px-6">
-           <img src="/assets/logo/otdlogo.png" alt="Outdid" className="h-10 mx-auto mb-12 opacity-40" />
+           <div className="inline-block bg-white p-2 rounded-2xl mb-12 opacity-60 hover:opacity-100 transition-opacity">
+              <img src="/assets/logo/otdlogo.png" alt="Outdid" className="h-10 mx-auto mix-blend-multiply" />
+           </div>
            <p className="text-gray-600 text-[10px] font-bold tracking-[0.6em] uppercase">© 2026 Outdid Unified Private Limited // Secure. Unified. Intelligent.</p>
         </div>
       </footer>

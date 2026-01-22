@@ -2,7 +2,7 @@ export const serviceDetails = {
   hardware: {
     title: "Hardware Design & Development",
     subtitle: "Electronic Design Services for Embedded Systems",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1200",
+    image: "assets/image/hardware.png",
     overview: "Our team of designers, with their immense industry experience, brings to you the best designs and development services created out of state-of-the-art technologies and methodologies. At Outdid Unified, we design, develop and prototype diverse, customized electronic hardware devices while ensuring cost effective, compact, faster, reliable, and efficient systems.",
     sections: [
       {
@@ -22,7 +22,7 @@ export const serviceDetails = {
   pcb: {
     title: "PCB Layout & Analysis",
     subtitle: "Custom PCB Design Services for HDI and Mixed Signal",
-    image: "https://images.unsplash.com/photo-1592659762303-90081d34b277?auto=format&fit=crop&q=80&w=1200",
+    image: "assets/image/pcb2.png",
     overview: "Outdid Unified is among the leading custom PCB Design Services companies in Bangalore. We offer complex multi-processor, MIL-STD-compliant, multi-layer board designs with proven methodologies. Our team delivers world-class PCBs that are certifiable, high-performance, and thermally-efficient.",
     sections: [
       {
@@ -42,7 +42,7 @@ export const serviceDetails = {
   firmware: {
     title: "Embedded Firmware Development",
     subtitle: "Low-Level Programming for Intelligent Hardware",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200",
+    image: "assets/image/firmware.png",
     overview: "Outdid Unified specializes in the low-level logic that powers modern hardware. Our firmware engineering bridges the gap between raw silicon and sophisticated software applications, ensuring absolute stability and security for critical systems.",
     sections: [
       {
@@ -62,7 +62,7 @@ export const serviceDetails = {
   software: {
     title: "Software & App Development",
     subtitle: "Custom IoT Solutions and ionHive Ecosystem",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
+    image: "assets/image/applicationdev.png",
     overview: "Our core software strength lies in the ionHive ecosystem, a sophisticated IoT platform designed for the EV revolution. We specialize in seamless hardware-software integration, enabling users to manage critical infrastructure directly from their smartphones.",
     sections: [
       {
@@ -97,7 +97,7 @@ export const serviceDetails = {
   mechanical: {
     title: "Mechanical Design Services",
     subtitle: "Industrial Design and Enclosure Engineering",
-    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=1200",
+    image: "assets/image/mechanical.png",
     overview: "Achieving a single design that fulfills all criteria is crucial. Our team helps realize the right enclosure, considering aesthetics, cost, cooling requirements, durability, and safety aspects. We handle risk through research and experimentation in early stages.",
     sections: [
       {

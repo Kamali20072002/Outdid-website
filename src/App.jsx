@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import ProjectPortfolio from './ProjectPortfolio';
+import Header from './components/Header';
 
 const policies = {
   privacy: {
@@ -397,18 +398,20 @@ Comments: ${careerFormData.comments}
                 }
               }}
             >
-              <img 
-                src="/assets/logo/outdidlogo.png" 
-                alt="Logo" 
-                className="h-9 w-auto"
-                loading="eager"
-                fetchpriority="high"
-              />
-              <div className="ml-3 text-lg font-black tracking-tighter hidden sm:block">
+              <div className="bg-white p-1.5 rounded-xl shadow-sm">
+                <img 
+                  src="/assets/logo/otdlogo.png" 
+                  alt="Logo" 
+                  className="h-7 w-auto"
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </div>
+              {/* <div className="ml-3 text-lg font-black tracking-tighter hidden sm:block">
                 <span className="transition-all duration-500 uppercase text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-outdid-amber">
                   Outdid Unified
                 </span>
-              </div>
+              </div> */}
             </Link>
             
             <nav className="hidden lg:flex space-x-8 text-[12px] font-bold uppercase tracking-[0.2em]">
@@ -496,89 +499,94 @@ Comments: ${careerFormData.comments}
           </div>
         </div>
 
-        {/* Mobile Menu Overlay */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden fixed inset-0 z-50 bg-white pt-24 px-6 animate-in fade-in duration-300 overflow-y-auto">
-            <div className="flex flex-col space-y-8 text-3xl font-black uppercase tracking-tighter text-outdid-blue">
-              <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setMobileMenuOpen(false); }} className="text-left hover:text-outdid-amber transition-colors">Home</button>
-              <button onClick={() => { scrollTo(aboutRef); setMobileMenuOpen(false); }} className="text-left hover:text-outdid-amber transition-colors">About</button>
-              <button onClick={() => { scrollTo(careerRef); setMobileMenuOpen(false); }} className="text-left hover:text-outdid-amber transition-colors">Career</button>
-              <button onClick={() => { scrollTo(contactRef); setMobileMenuOpen(false); }} className="text-left hover:text-outdid-amber transition-colors">Contact</button>
-              <button 
-                onClick={() => window.open('https://ionhive.in/', '_blank')}
-                className="text-left hover:text-outdid-amber transition-colors"
-              >
-                Outdid Hub
-              </button>
-            </div>
-            <div className="mt-20 pt-10 border-t border-gray-100 mb-20">
-               <div className="text-[10px] font-black text-outdid-amber uppercase tracking-[0.5em] mb-4">Initialize Collaboration</div>
-               <button 
-                onClick={() => { scrollTo(contactRef); setMobileMenuOpen(false); }}
-                className="w-full py-5 bg-outdid-amber text-outdid-blue rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-outdid-amber/20"
-               >
-                 Get In Touch
-               </button>
-            </div>
-          </div>
-
-        )}
-
-        {/* Mega Menu Content */}
-        {activeMenu && (
-          <div 
-            className="absolute top-16 left-0 right-0 bg-[#020812]/95 backdrop-blur-xl text-white border-b border-white/10 shadow-2xl animate-in slide-in-from-top-2 duration-300"
-            onMouseEnter={() => setActiveMenu(activeMenu)}
-          >
-            <div className="mx-auto px-4 md:px-24 py-16 flex gap-20">
-              <div className="w-64">
-                <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-outdid-amber mb-8 text-left">
-                  {activeMenu === 'products' ? 'Product Portfolio' : 'Our Services'}
-                </h4>
-                <ul className="space-y-6 text-xl font-black text-left uppercase tracking-tighter text-white">
-                  {activeMenu === 'products' ? (
-                    <>
-                      <li onClick={() => { navigate('/outdidprojectportfolios'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Embedded Systems</li>
-                      <li onClick={() => { navigate('/outdidprojectportfolios'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">EV Infrastructure</li>
-                      <li onClick={() => { navigate('/outdidprojectportfolios'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">IoT Solutions</li>
-                    </>
-                  ) : (
-                    <>
-                      <li onClick={() => { setActiveService('hardware'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Hardware Design</li>
-                      <li onClick={() => { setActiveService('pcb'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">PCB Engineering</li>
-                      <li onClick={() => { setActiveService('firmware'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Firmware Dev</li>
-                      <li onClick={() => { setActiveService('software'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Application Development</li>
-                      <li onClick={() => { setActiveService('mechanical'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Mechanical Design</li>
-                    </>
-                  )}
-                </ul>
-              </div>
-              
-              <div className="flex-1 grid grid-cols-3 gap-8">
-                {(activeMenu === 'products' ? [
-                  { name: 'Vehicle Control', desc: 'VCU & Drive systems', img: '/assets/image/vehiclecontrol.png' },
-                  { name: 'Power Electronics', desc: 'BMS & Motor Control', img: '/assets/image/bms.png' },
-                  { name: 'Telematics', desc: 'Data Loggers & VTS', img: '/assets/image/telemetry.png' }
-                ] : [
-                  { name: 'Hardware R&D', desc: 'Custom silicon & board design', img: '/assets/image/hero.png' },
-                  { name: 'PCB Precision', desc: 'Multi-layer prototyping', img: '/assets/image/pcb.png' },
-                  { name: 'Unified Software', desc: 'Cloud & system integration', img: '/assets/image/software.png' }
-                ]).map(item => (
-                  <div key={item.name} className="flex flex-col group cursor-pointer">
-                    <div className="aspect-video overflow-hidden rounded-2xl mb-6 relative">
-                      <div className="absolute inset-0 bg-outdid-amber/0 group-hover:bg-outdid-amber/10 transition-colors z-10"></div>
-                      <img src={item.img} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                    </div>
-                    <span className="text-[10px] font-black text-outdid-amber uppercase tracking-[0.3em] mb-2">{item.name}</span>
-                    <span className="text-sm font-bold text-gray-400 group-hover:text-white transition-colors">{item.desc}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Mobile Menu Overlay removed from here */}
       </header>
 
+      {/* Mobile Menu Overlay - Moved outside header to fix clipping */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 z-[100] bg-white pt-24 px-6 animate-in fade-in duration-300 overflow-y-auto">
+          <button 
+            onClick={() => setMobileMenuOpen(false)}
+            className="absolute top-5 right-6 p-2 text-outdid-blue hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div className="flex flex-col space-y-8 text-3xl font-black uppercase tracking-tighter text-outdid-blue">
+            <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setMobileMenuOpen(false); }} className="text-left hover:text-outdid-amber transition-colors">Home</button>
+            <button onClick={() => { scrollTo(aboutRef); setMobileMenuOpen(false); }} className="text-left hover:text-outdid-amber transition-colors">About</button>
+            <button onClick={() => { scrollTo(careerRef); setMobileMenuOpen(false); }} className="text-left hover:text-outdid-amber transition-colors">Career</button>
+            <button onClick={() => { scrollTo(contactRef); setMobileMenuOpen(false); }} className="text-left hover:text-outdid-amber transition-colors">Contact</button>
+            
+          </div>
+          <div className="mt-20 pt-10 border-t border-gray-100 mb-20">
+             <div className="text-[10px] font-black text-outdid-amber uppercase tracking-[0.5em] mb-4">Initialize Collaboration</div>
+             <button 
+              onClick={() => { scrollTo(contactRef); setMobileMenuOpen(false); }}
+              className="w-full py-5 bg-outdid-amber text-outdid-blue rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-outdid-amber/20"
+             >
+               Get In Touch
+             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Mega Menu Content - Moved outside header to fix potential clipping */}
+      {activeMenu && (
+        <div 
+          className="fixed top-16 left-0 right-0 z-50 bg-[#020812]/95 backdrop-blur-xl text-white border-b border-white/10 shadow-2xl animate-in slide-in-from-top-2 duration-300"
+          onMouseEnter={() => setActiveMenu(activeMenu)}
+          onMouseLeave={() => setActiveMenu(null)}
+        >
+          <div className="mx-auto px-4 md:px-24 py-16 flex gap-20">
+            <div className="w-64">
+              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-outdid-amber mb-8 text-left">
+                {activeMenu === 'products' ? 'Product Portfolio' : 'Our Services'}
+              </h4>
+              <ul className="space-y-6 text-xl font-black text-left uppercase tracking-tighter text-white">
+                {activeMenu === 'products' ? (
+                  <>
+                    <li onClick={() => { navigate('/outdidprojectportfolios'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Embedded Systems</li>
+                    <li onClick={() => { navigate('/outdidprojectportfolios'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">EV Infrastructure</li>
+                    <li onClick={() => { navigate('/outdidprojectportfolios'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">IoT Solutions</li>
+                  </>
+                ) : (
+                  <>
+                    <li onClick={() => { setActiveService('hardware'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Hardware Design</li>
+                    <li onClick={() => { setActiveService('pcb'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">PCB Engineering</li>
+                    <li onClick={() => { setActiveService('firmware'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Firmware Dev</li>
+                    <li onClick={() => { setActiveService('software'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Application Development</li>
+                    <li onClick={() => { setActiveService('mechanical'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Mechanical Design</li>
+                  </>
+                )}
+              </ul>
+            </div>
+            
+            <div className="flex-1 grid grid-cols-3 gap-8">
+              {(activeMenu === 'products' ? [
+                { name: 'Vehicle Control', desc: 'VCU & Drive systems', img: '/assets/image/vehiclecontrol.png' },
+                { name: 'Power Electronics', desc: 'BMS & Motor Control', img: '/assets/image/bms.png' },
+                { name: 'Telematics', desc: 'Data Loggers & VTS', img: '/assets/image/telemetry.png' }
+              ] : [
+                { name: 'Hardware R&D', desc: 'Custom silicon & board design', img: '/assets/image/hero.png' },
+                { name: 'PCB Precision', desc: 'Multi-layer prototyping', img: '/assets/image/pcb.png' },
+                { name: 'Unified Software', desc: 'Cloud & system integration', img: '/assets/image/software.png' }
+              ]).map(item => (
+                <div key={item.name} className="flex flex-col group cursor-pointer">
+                  <div className="aspect-video overflow-hidden rounded-2xl mb-6 relative">
+                    <div className="absolute inset-0 bg-outdid-amber/0 group-hover:bg-outdid-amber/10 transition-colors z-10"></div>
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  </div>
+                  <span className="text-[10px] font-black text-outdid-amber uppercase tracking-[0.3em] mb-2">{item.name}</span>
+                  <span className="text-sm font-bold text-gray-400 group-hover:text-white transition-colors">{item.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    
        {/* Advanced Hardware Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#020812]">
         
@@ -659,18 +667,18 @@ Comments: ${careerFormData.comments}
         <div className="absolute bottom-10 left-10 right-10 z-40 hidden lg:flex items-end justify-between border-t border-white/5 pt-10">
            <div className="flex space-x-16">
               <div>
-                 <div className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-3">Thermal Diagnostic</div>
+                 <div className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-3">Grid Optimization</div>
                  <div className="flex items-center space-x-3">
                     <div className="w-48 h-1.5 bg-white/5 rounded-full overflow-hidden">
-                       <div className="h-full bg-gradient-to-r from-outdid-blue to-outdid-amber w-[42%]"></div>
+                       <div className="h-full bg-gradient-to-r from-outdid-blue to-outdid-amber w-[68%]"></div>
                     </div>
-                    <span className="text-[10px] font-mono text-white">32°C</span>
+                    <span className="text-[10px] font-mono text-white">ION_SYNC: ACTIVE</span>
                  </div>
               </div>
               <div>
-                 <div className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-3">Bus Bandwidth</div>
+                 <div className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-3">Active Telemetry Nodes</div>
                  <div className="flex space-x-1">
-                    {[1,2,3,4,5,6,7,8].map(i => <div key={i} className={`w-3 h-3 rounded-sm ${i < 6 ? 'bg-outdid-amber' : 'bg-white/10'}`}></div>)}
+                    {[1,2,3,4,5,6,7,8].map(i => <div key={i} className={`w-3 h-3 rounded-sm ${i < 7 ? 'bg-outdid-amber' : 'bg-white/10'}`}></div>)}
                  </div>
               </div>
            </div>
@@ -678,7 +686,7 @@ Comments: ${careerFormData.comments}
            <div className="flex items-center space-x-8">
               <div className="text-right">
                  <div className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-1 font-mono">ENCRYPTED_LINK: STABLE</div>
-                 <div className="text-white text-xs font-black">OUTDID_UNIFIED_v4</div>
+                 <div className="text-white text-xs font-black">ION_HIVE_OS v2.4.0</div>
               </div>
               <div className="w-14 h-14 glass rounded-2xl flex items-center justify-center border-outdid-amber/20 group cursor-pointer hover:rotate-90 transition-all duration-500">
                  <svg className="w-6 h-6 text-outdid-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
@@ -994,13 +1002,17 @@ Comments: ${careerFormData.comments}
           
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {[
-              { name: 'Hardware Design', desc: 'Experts in circuit design and high-performance hardware development.' },
-              { name: 'Firmware Team', desc: 'Specializing in intelligent, flexible, and responsive embedded software.' },
-              { name: 'Application Team', desc: 'Building intuitive web and mobile solutions for seamless user experiences.' },
-              { name: 'Mechanical Team', desc: 'Focused on structural integrity and functional, aesthetic enclosures.' },
-              { name: 'PCB Design Team', desc: 'Optimizing boards for high performance and durability in demanding environments.' }
+              { id: 'hardware', name: 'Hardware Design', desc: 'Experts in circuit design and high-performance hardware development.' },
+              { id: 'firmware', name: 'Firmware Team', desc: 'Specializing in intelligent, flexible, and responsive embedded software.' },
+              { id: 'software', name: 'Application Team', desc: 'Building intuitive web and mobile solutions for seamless user experiences.' },
+              { id: 'mechanical', name: 'Mechanical Team', desc: 'Focused on structural integrity and functional, aesthetic enclosures.' },
+              { id: 'pcb', name: 'PCB Design Team', desc: 'Optimizing boards for high performance and durability in demanding environments.' }
             ].map((team) => (
-              <div key={team.name} className="group">
+              <div 
+                key={team.name} 
+                className="group cursor-pointer"
+                onClick={() => setActiveService(team.id)}
+              >
                 <div className="h-1 w-12 bg-outdid-amber mb-6 group-hover:w-full transition-all duration-500"></div>
                 <h4 className="text-sm font-black text-outdid-blue uppercase tracking-widest mb-4">{team.name}</h4>
                 <p className="text-xs text-gray-400 leading-relaxed font-bold uppercase tracking-wider">{team.desc}</p>
@@ -1391,10 +1403,11 @@ Comments: ${careerFormData.comments}
         </div>
       </section>
 
-      <footer className="bg-[#020812] py-24 text-center border-t border-white/5">
+       <footer className="bg-[#020812] py-24 text-center border-t border-white/5">
         <div className="container mx-auto px-6">
-           <img src="/assets/logo/otdlogo.png" alt="Outdid" className="h-10 mx-auto mb-12 opacity-40" />
-           
+           <div className="inline-block bg-white p-2 rounded-2xl mb-12 opacity-60 hover:opacity-100 transition-opacity">
+              <img src="/assets/logo/otdlogo.png" alt="Outdid" className="h-10 mx-auto mix-blend-multiply" />
+           </div>
            <p className="text-gray-600 text-[10px] font-bold tracking-[0.6em] uppercase">© 2026 Outdid Unified Private Limited // Secure. Unified. Intelligent.</p>
         </div>
       </footer>
