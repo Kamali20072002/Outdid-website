@@ -39,7 +39,9 @@ const Header = ({
             <img 
               src="/assets/logo/outdidlogo.png" 
               alt="Logo" 
-              className="h-9 w-auto"
+              className={`h-9 w-auto transition-all duration-500 ${
+                scrollY > 50 || activeMenu ? 'brightness-0 invert' : 'mix-blend-multiply'
+              }`}
               loading="eager"
               fetchpriority="high"
             />

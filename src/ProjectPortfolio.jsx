@@ -172,98 +172,98 @@ const ProjectPortfolio = () => {
                 title: "EV Chargers",
                 spec: "3.7kW / 7.4kW / 11kW / 22kW",
                 desc: "Complete line of smart AC chargers with integrated cloud management and load balancing.",
-                img: "https://images.unsplash.com/photo-1591815302525-756a9bcc3425?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/phone2.png",
                 category: "EV Infrastructure"
               },
               {
                 title: "OCPP Controller",
                 spec: "NFC Enabled",
                 desc: "Advanced controller card supporting OCPP 1.6J/2.0 protocols for global smart charging standards.",
-                img: "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/ocpp.png",
                 category: "Power Electronics"
               },
               {
                 title: "Vehicle Control Unit",
                 spec: "VCU Systems",
                 desc: "The central brain for electric vehicles managing drivetrain, safety, and diagnostics.",
-                img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/vehiclecontrol.png",
                 category: "Automotive"
               },
               {
                 title: "Discharge Module",
                 spec: "V2L / V2G",
                 desc: "Bi-directional power modules enabling Vehicle-to-Load and Vehicle-to-Grid applications.",
-                img: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/dischargemodule.png",
                 category: "Energy Systems"
               },
               {
                 title: "Remote Diagnostics",
                 spec: "Predictive AI",
                 desc: "Cloud-based maintenance system predicting hardware failures with machine learning.",
-                img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/Remotediag.png",
                 category: "Cloud IoT"
               },
               {
                 title: "CAN Data Logger",
                 spec: "High Speed",
                 desc: "Industrial-grade CAN bus logger for real-time vehicle data acquisition and analysis.",
-                img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/candatalogger.png",
                 category: "Diagnostics"
               },
               {
                 title: "BMS Analytics",
                 spec: "Health Monitoring",
                 desc: "Sophisticated battery management analytics for long-term state-of-health tracking.",
-                img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/bms.png",
                 category: "Energy Management"
               },
               {
                 title: "Vehicle Tracking",
                 spec: "GPS Telematics",
                 desc: "Advanced GPS-based tracking system with real-time speed, location, and geofencing.",
-                img: "https://images.unsplash.com/photo-1524522173746-f628baad3644?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/vehiclecontrol.png",
                 category: "Fleet Management"
               },
               {
                 title: "Voltmeter Module",
                 spec: "Ammeter Combo",
                 desc: "Precision voltage and current monitoring module for critical industrial power systems.",
-                img: "https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/voltmeter.png",
                 category: "Instrumentation"
               },
               {
                 title: "BLDC Controller",
                 spec: "Motor Control",
                 desc: "High-efficiency BLDC motor controller for light electric vehicles and robotics.",
-                img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/bldc.png",
                 category: "Motion Control"
               },
               {
                 title: "LoRa Controller",
                 spec: "Long Range",
                 desc: "Ultra-low power LoRa controller card for wide-area remote industrial sensing.",
-                img: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/lora.png",
                 category: "Connectivity"
               },
               {
                 title: "4G Data Logger",
                 spec: "Cellular IOT",
                 desc: "High-bandwidth 2G/4G data logger for global asset monitoring and telemetry.",
-                img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/4gdatalogger.png",
                 category: "Connectivity"
               },
               {
                 title: "Solar LoRa Node",
                 spec: "Panel Monitoring",
                 desc: "Master/Node controller system for real-time solar farm efficiency tracking.",
-                img: "https://images.unsplash.com/photo-1509391366360-fe5bb658582f?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/solarlora.png",
                 category: "Renewables"
               },
               {
                 title: "VFD Controller",
                 spec: "Motor Logic",
                 desc: "Variable Frequency Drive controller for advanced industrial automation.",
-                img: "https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=1200",
+                img: "/assets/image/vfd.png",
                 category: "Industrial Automation"
               }
             ].map((project, idx) => (

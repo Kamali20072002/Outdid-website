@@ -189,7 +189,7 @@ Comments: ${careerFormData.comments}
     hardware: {
       title: "Hardware Design & Development",
       subtitle: "Electronic Design Services for Embedded Systems",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1200",
+      image: "assets/image/hardware.png",
       overview: "Our team of designers, with their immense industry experience, brings to you the best designs and development services created out of state-of-the-art technologies and methodologies. At Outdid Unified, we design, develop and prototype diverse, customized electronic hardware devices while ensuring cost effective, compact, faster, reliable, and efficient systems.",
       sections: [
         {
@@ -209,7 +209,7 @@ Comments: ${careerFormData.comments}
     pcb: {
       title: "PCB Layout & Analysis",
       subtitle: "Custom PCB Design Services for HDI and Mixed Signal",
-      image: "https://images.unsplash.com/photo-1592659762303-90081d34b277?auto=format&fit=crop&q=80&w=1200",
+      image: "assets/image/pcb2.png",
       overview: "Outdid Unified is among the leading custom PCB Design Services companies in Bangalore. We offer complex multi-processor, MIL-STD-compliant, multi-layer board designs with proven methodologies. Our team delivers world-class PCBs that are certifiable, high-performance, and thermally-efficient.",
       sections: [
         {
@@ -229,7 +229,7 @@ Comments: ${careerFormData.comments}
     firmware: {
       title: "Embedded Firmware Development",
       subtitle: "Low-Level Programming for Intelligent Hardware",
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200",
+      image: "assets/image/firmware.png",
       overview: "Outdid Unified specializes in the low-level logic that powers modern hardware. Our firmware engineering bridges the gap between raw silicon and sophisticated software applications, ensuring absolute stability and security for critical systems.",
       sections: [
         {
@@ -249,7 +249,7 @@ Comments: ${careerFormData.comments}
     software: {
       title: "Software Design Services",
       subtitle: "Embedded Software and System Development",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
+      image: "assets/image/applicationdev.png",
       overview: "Our programmers work with open and proprietary operating systems, creating all levels of software, from firmware to application software and graphical user interfaces (GUI). We have strong experience in Networking, Automotive, and Consumer Electronics.",
       sections: [
         {
@@ -269,7 +269,7 @@ Comments: ${careerFormData.comments}
     mechanical: {
       title: "Mechanical Design Services",
       subtitle: "Industrial Design and Enclosure Engineering",
-      image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=1200",
+      image: "assets/image/mechanical.png",
       overview: "Achieving a single design that fulfills all criteria is crucial. Our team helps realize the right enclosure, considering aesthetics, cost, cooling requirements, durability, and safety aspects. We handle risk through research and experimentation in early stages.",
       sections: [
         {
@@ -532,7 +532,7 @@ Comments: ${careerFormData.comments}
                       <li onClick={() => { setActiveService('hardware'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Hardware Design</li>
                       <li onClick={() => { setActiveService('pcb'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">PCB Engineering</li>
                       <li onClick={() => { setActiveService('firmware'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Firmware Dev</li>
-                      <li onClick={() => { setActiveService('software'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Software Systems</li>
+                      <li onClick={() => { setActiveService('software'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Application Development</li>
                       <li onClick={() => { setActiveService('mechanical'); setActiveMenu(null); }} className="hover:text-outdid-amber cursor-pointer transition-all hover:translate-x-2">Mechanical Design</li>
                     </>
                   )}
@@ -541,13 +541,13 @@ Comments: ${careerFormData.comments}
               
               <div className="flex-1 grid grid-cols-3 gap-8">
                 {(activeMenu === 'products' ? [
-                  { name: 'Vehicle Control', desc: 'VCU & Drive systems', img: 'https://images.unsplash.com/photo-1591815302525-756a9bcc3425?auto=format&fit=crop&q=80&w=400' },
-                  { name: 'Power Electronics', desc: 'BMS & Motor Control', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400' },
-                  { name: 'Telematics', desc: 'Data Loggers & VTS', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=400' }
+                  { name: 'Vehicle Control', desc: 'VCU & Drive systems', img: '/assets/image/vehiclecontrol.png' },
+                  { name: 'Power Electronics', desc: 'BMS & Motor Control', img: '/assets/image/bms.png' },
+                  { name: 'Telematics', desc: 'Data Loggers & VTS', img: '/assets/image/telemetry.png' }
                 ] : [
-                  { name: 'Hardware R&D', desc: 'Custom silicon & board design', img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=400' },
-                  { name: 'PCB Precision', desc: 'Multi-layer prototyping', img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400' },
-                  { name: 'Unified Software', desc: 'Cloud & system integration', img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=400' }
+                  { name: 'Hardware R&D', desc: 'Custom silicon & board design', img: '/assets/image/hero.png' },
+                  { name: 'PCB Precision', desc: 'Multi-layer prototyping', img: '/assets/image/pcb.png' },
+                  { name: 'Unified Software', desc: 'Cloud & system integration', img: '/assets/image/software.png' }
                 ]).map(item => (
                   <div key={item.name} className="flex flex-col group cursor-pointer">
                     <div className="aspect-video overflow-hidden rounded-2xl mb-6 relative">
@@ -725,7 +725,7 @@ Comments: ${careerFormData.comments}
         {/* Background Decorative Elements */}
         <div className="absolute top-0 right-0 w-[60%] h-full">
            <img 
-             src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200" 
+             src="assets/image/hero2.png" 
              alt="About parallax" 
              className="w-full h-full object-cover opacity-20 grayscale" 
              loading="eager"
@@ -860,21 +860,21 @@ Comments: ${careerFormData.comments}
                 title: "EV Chargers",
                 spec: "3.7kW / 7.4kW / 11kW / 22kW",
                 desc: "Complete line of smart AC chargers with integrated cloud management.",
-                img: "https://images.unsplash.com/photo-1591815302525-756a9bcc3425?auto=format&fit=crop&q=80&w=800",
+                img: "/assets/image/phone2.png",
                 color: "bg-blue-50"
               },
               {
                 title: "OCPP Controller",
                 spec: "NFC Enabled",
                 desc: "Advanced controller card supporting OCPP 1.6J/2.0 protocols for smart charging.",
-                img: "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&q=80&w=800",
+                img: "/assets/image/ocpp.png",
                 color: "bg-amber-50"
               },
               {
                 title: "Vehicle Control Unit",
                 spec: "VCU Systems",
                 desc: "The central brain for electric vehicles managing drivetrain and diagnostics.",
-                img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=800",
+                img: "/assets/image/vehiclecontrol.png",
                 color: "bg-gray-50"
               }
             ].map((project, idx) => (
