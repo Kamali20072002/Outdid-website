@@ -247,22 +247,37 @@ Comments: ${careerFormData.comments}
       ]
     },
     software: {
-      title: "Software Design Services",
-      subtitle: "Embedded Software and System Development",
+      title: "Software & App Development",
+      subtitle: "Custom IoT Solutions and ionHive Ecosystem",
       image: "assets/image/applicationdev.png",
-      overview: "Our programmers work with open and proprietary operating systems, creating all levels of software, from firmware to application software and graphical user interfaces (GUI). We have strong experience in Networking, Automotive, and Consumer Electronics.",
+      overview: "Our core software strength lies in the ionHive ecosystem, a sophisticated IoT platform designed for the EV revolution. We specialize in seamless hardware-software integration, enabling users to manage critical infrastructure directly from their smartphones.",
       sections: [
         {
-          title: "Architecture & OS",
-          items: ["Software Component/Functional Partitioning", "Linux Kernel Porting & Root File System optimization", "Board Support Packages (BSP)", "DDR2/DDR3 Memory configuration scripts", "High-End Computational system implementation"]
+          title: "ionHive EV Ecosystem",
+          items: [
+            "Smart EV Charging control via mobile app",
+            "Real-time start/stop and monitoring through IoT",
+            "Secure payment integration and user management",
+            "Cloud-based charger telemetry and diagnostics"
+          ]
         },
         {
-          title: "Device Drivers",
-          items: ["High-speed interconnects (PCIe, USB, SDIO)", "Display Devices (LCD, E-Ink, Touch Panels)", "Audio interfaces (I2S, AC97, TDM)", "Ethernet Interfaces (MII, RMII, RGMII)"]
+          title: "IoT & Embedded Software",
+          items: [
+            "Advanced Battery Management Systems (BMS)",
+            "Vehicle Tracking Systems (VTS) with GPS",
+            "Smart Water Purifier control logic",
+            "Custom firmware for industrial IoT nodes"
+          ]
         },
         {
-          title: "Stacks & Middleware",
-          items: ["L2/L3 Layer Processor Offload Engines", "Protocol Stacks (SIGTRAN, GSM A Interface, 3G H-324M)", "Telecom stacks (Asterisk, Freeswitch)", "Digital Television / SetTop Box Middleware"]
+          title: "Web & App Expertise",
+          items: [
+            "Full-stack website building and deployment",
+            "Custom mobile application development (iOS/Android)",
+            "Scalable backend architectures",
+            "High-performance UI/UX design"
+          ]
         }
       ]
     },
@@ -1030,7 +1045,7 @@ Comments: ${careerFormData.comments}
                     <option className="bg-outdid-blue" value="Apply Now">Apply Now</option>
                     <option className="bg-outdid-blue" value="Hardware Engineer">Hardware Engineer</option>
                     <option className="bg-outdid-blue" value="Firmware Developer">Firmware Developer</option>
-                    <option className="bg-outdid-blue" value="Software Developer">Software Developer</option>
+                    <option className="bg-outdid-blue" value="Software Developer">Application Developer</option>
                     <option className="bg-outdid-blue" value="PCB Designer">PCB Designer</option>
                     <option className="bg-outdid-blue" value="Mechanical Designer">Mechanical Designer</option>
                   </select>
