@@ -459,11 +459,11 @@ Comments: ${careerFormData.comments}
               </a>
               <button 
                 onClick={() => scrollTo(contactRef)}
-                className="hidden sm:block p-2 hover:bg-white/5 rounded-full transition-colors"
+              className="p-2 bg-outdid-amber text-outdid-blue rounded-full shadow-lg shadow-outdid-amber/20 hover:scale-110 transition-transform"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
+                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
               </button>
               <button 
                 className="lg:hidden p-2 hover:bg-white/5 rounded-full"
@@ -506,6 +506,7 @@ Comments: ${careerFormData.comments}
                </button>
             </div>
           </div>
+
         )}
 
         {/* Mega Menu Content */}
@@ -605,8 +606,7 @@ Comments: ${careerFormData.comments}
           className="absolute inset-0 z-0 opacity-40 scale-110 pointer-events-none"
           style={{
             transform: `translateY(${scrollY * 0.15}px) scale(${1 + scrollY * 0.0002})`,
-            backgroundImage: "url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2000')",
-            backgroundPosition: 'center',
+            backgroundImage: "url('/assets/image/hero.png')",            backgroundPosition: 'center',
             backgroundSize: 'cover'
           }}
         >
@@ -1378,10 +1378,8 @@ Comments: ${careerFormData.comments}
 
       <footer className="bg-[#020812] py-24 text-center border-t border-white/5">
         <div className="container mx-auto px-6">
-           <img src="/assets/logo/outdidlogo.png" alt="Outdid" className="h-10 mx-auto mb-12 opacity-40" />
-           <div className="flex flex-wrap justify-center gap-8 mb-8 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
-             <span className="cursor-pointer hover:text-white transition-colors" onClick={() => scrollTo(policiesRef)}>EVSE</span>
-           </div>
+           <img src="/assets/logo/otdlogo.png" alt="Outdid" className="h-10 mx-auto mb-12 opacity-40" />
+           
            <p className="text-gray-600 text-[10px] font-bold tracking-[0.6em] uppercase">© 2026 Outdid Unified Private Limited // Secure. Unified. Intelligent.</p>
         </div>
       </footer>
