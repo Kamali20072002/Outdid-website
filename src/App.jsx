@@ -648,7 +648,7 @@ Comments: ${careerFormData.comments}
           </h1>
           
           <p className="text-lg md:text-2xl text-gray-400 mb-12 max-w-2xl font-light leading-tight tracking-tight">
-            Engineering unified private systems that transcend conventional silicon architecture. Precision, security, and intelligence combined.
+            Being a part of OUTDID UNIFIED PVT LTD. We take pride in being a one stop shop for any of your NEW product development and Manufacturing or Resolving any of your business challenges through digitalization and IOT solutions. Our In-House capabilities includes design and development of Hardware board, Enclosure , Firmware, Application Software and Manufacture them cost effectively.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8">
