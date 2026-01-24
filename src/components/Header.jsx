@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Header = ({ 
-  scrollY, 
+  isScrolled, 
   activeMenu, 
   setActiveMenu, 
   setActiveService,
@@ -29,10 +29,11 @@ const Header = ({
 
       <header 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrollY > 50 || activeMenu || mobileMenuOpen 
+        isScrolled || activeMenu || mobileMenuOpen 
         ? 'bg-[#020812]/90 backdrop-blur-md border-b border-white/10 shadow-2xl' 
         : 'bg-transparent'
       }`}
+      style={{ willChange: 'transform, background-color, backdrop-filter' }}
       onMouseLeave={() => setActiveMenu(null)}
     >
       <div className="mx-auto px-4 md:px-16 lg:px-24 h-16 flex items-center justify-between">
