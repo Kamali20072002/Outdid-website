@@ -261,11 +261,20 @@ const Header = ({
                 { name: 'Power Electronics', desc: 'BMS & Motor Control', img: '/assets/image/bms.png' },
                 { name: 'Telematics', desc: 'Data Loggers & VTS', img: '/assets/image/telemetry.png' }
               ] : [
-                { name: 'Hardware R&D', desc: 'Custom silicon & board design', img: '/assets/image/hero.png' },
-                { name: 'PCB Precision', desc: 'Multi-layer prototyping', img: '/assets/image/pcb.png' },
-                { name: 'Unified Software', desc: 'Cloud & system integration', img: '/assets/image/software.png' }
+                { id: 'hardware', name: 'Hardware R&D', desc: 'Custom silicon & board design', img: '/assets/image/hero.png' },
+                { id: 'pcb', name: 'PCB Precision', desc: 'Multi-layer prototyping', img: '/assets/image/pcb.png' },
+                { id: 'software', name: 'Unified Software', desc: 'Cloud & system integration', img: '/assets/image/software.png' }
               ]).map(item => (
-                <div key={item.name} className="flex flex-col group cursor-pointer">
+                <div 
+                  key={item.name} 
+                  className="flex flex-col group cursor-pointer"
+                  onClick={() => {
+                    if (item.id) {
+                      setActiveService(item.id);
+                      setActiveMenu(null);
+                    }
+                  }}
+                >
                   <div className="aspect-video overflow-hidden rounded-2xl mb-6 relative">
                     <div className="absolute inset-0 bg-outdid-amber/0 group-hover:bg-outdid-amber/10 transition-colors z-10"></div>
                     <img src={item.img} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />

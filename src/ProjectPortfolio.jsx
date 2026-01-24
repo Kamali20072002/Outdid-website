@@ -11,35 +11,165 @@ const ProjectPortfolio = () => {
   // Chatbot State
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([
-    { role: 'assistant', content: 'Hello! I am your Outdid Solutions Assistant. How can I help you with our project portfolio today?' }
+    { 
+      role: 'assistant', 
+      content: 'Hello! I am your Outdid Solutions Assistant. How can I help you with our project portfolio today?',
+      options: ['About Services', 'Projects', 'Company Details', 'Others']
+    }
   ]);
   const [userInput, setUserInput] = useState('');
+  const [isWaitingForOthers, setIsWaitingForOthers] = useState(false);
+  const [isAskingConfirmation, setIsAskingConfirmation] = useState(false);
+  const [showSummaryButtonOnly, setShowSummaryButtonOnly] = useState(false);
+  const [isBotTyping, setIsBotTyping] = useState(false);
+  const [isSummarySent, setIsSummarySent] = useState(false);
+  const [lastUserRequirement, setLastUserRequirement] = useState('');
+
+  const resetChat = () => {
+    setChatMessages([
+      { 
+        role: 'assistant', 
+        content: 'Hello! I am your Outdid Solutions Assistant. How can I help you with our project portfolio today?',
+        options: ['About Services', 'Projects', 'Company Details', 'Others']
+      }
+    ]);
+    setIsWaitingForOthers(false);
+    setIsAskingConfirmation(false);
+    setShowSummaryButtonOnly(false);
+    setIsSummarySent(false);
+    setLastUserRequirement('');
+    setIsBotTyping(false);
+  };
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (!userInput.trim()) return;
 
-    const newMessages = [...chatMessages, { role: 'user', content: userInput }];
+    const input = userInput.trim();
+    const newMessages = [...chatMessages, { role: 'user', content: input }];
     setChatMessages(newMessages);
     setUserInput('');
+    setIsBotTyping(true);
 
-    // Simple simulated response
+    const lowerInput = input.toLowerCase();
+    const isGreeting = ['hi', 'hello', 'hey', 'greetings', 'hola'].some(g => lowerInput === g || lowerInput.startsWith(g + ' '));
+
+    if (isGreeting) {
+      setTimeout(() => {
+        setChatMessages(prev => [...prev, { 
+          role: 'assistant', 
+          content: 'Hello! I am your Outdid Solutions Assistant. How can I help you with our project portfolio today?',
+          options: ['About Services', 'Projects', 'Company Details', 'Others']
+        }]);
+        setIsWaitingForOthers(false);
+        setIsAskingConfirmation(false);
+        setShowSummaryButtonOnly(false);
+        setIsBotTyping(false);
+      }, 800);
+      return;
+    }
+
+    if (isWaitingForOthers) {
+      setLastUserRequirement(input);
+      let responsePrefix = '';
+
+      if (lowerInput.includes('service')) {
+        responsePrefix = 'We provide Hardware Design, Firmware Development, Application Development, Mechanical Design, and PCB Engineering services. ';
+      } else if (lowerInput.includes('project')) {
+        responsePrefix = 'Our portfolio includes EV Chargers, OCPP Controllers, Vehicle Control Units, and many other high-performance embedded systems. ';
+      } else if (lowerInput.includes('company') || lowerInput.includes('detail') || lowerInput.includes('about')) {
+        responsePrefix = 'Outdid Unified Private Limited specializes in secure, unified, and intelligent hardware solutions. We are based in Bangalore, India. ';
+      }
+
+      setTimeout(() => {
+        setChatMessages(prev => [...prev, { 
+          role: 'assistant', 
+          content: responsePrefix + "That's interesting! Can we send a summary of our conversation to the Outdid team for a detailed response?",
+          options: ['Yes', 'No']
+        }]);
+        setIsWaitingForOthers(false);
+        setIsAskingConfirmation(true);
+        setIsBotTyping(false);
+      }, 800);
+    } else {
+      // Standard simulated response for non-"Others" flow
+      setTimeout(() => {
+        setChatMessages(prev => [...prev, { 
+          role: 'assistant', 
+          content: "I'm here to help! Please choose an option or tell me more about your requirements.",
+          options: ['About Services', 'Projects', 'Company Details', 'Others']
+        }]);
+        setIsBotTyping(false);
+      }, 1000);
+    }
+  };
+
+  const handleOptionClick = (option) => {
+    if (isBotTyping) return;
+    
+    const userMessage = { role: 'user', content: option };
+    setIsBotTyping(true);
+
+    // Disable options for the message that was just clicked
+    setChatMessages(prev => prev.map((msg, i) => 
+      i === prev.length - 1 ? { ...msg, optionsDisabled: true } : msg
+    ));
+
+    let assistantResponse = '';
+    let waiting = false;
+    let askingConf = false;
+    let showSummaryBtn = false;
+
+    if (option === 'Yes' && isAskingConfirmation) {
+      assistantResponse = "Great! Please click the 'Finish & Send Summary' button below to connect with our team on WhatsApp.";
+      showSummaryBtn = true;
+    } else if (option === 'No' && isAskingConfirmation) {
+      assistantResponse = "No problem! Is there anything else I can help you with?";
+    } else if (option === 'About Services') {
+      assistantResponse = 'We provide Hardware Design, Firmware Development, Application Development, Mechanical Design, and PCB Engineering services.';
+    } else if (option === 'Projects') {
+      assistantResponse = 'Our portfolio includes EV Chargers, OCPP Controllers, Vehicle Control Units, and many other high-performance embedded systems.';
+    } else if (option === 'Company Details') {
+      assistantResponse = 'Outdid Unified Private Limited specializes in secure, unified, and intelligent hardware solutions. We are based in Bangalore, India.';
+    } else if (option === 'Others') {
+      assistantResponse = 'Please tell me more about your specific requirements or feedback.';
+      waiting = true;
+    }
+
     setTimeout(() => {
-      setChatMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: "That's interesting! Would you like me to include this in the final summary for our engineering team on WhatsApp?" 
-      }]);
-    }, 1000);
+      setIsWaitingForOthers(waiting);
+      setIsAskingConfirmation(askingConf);
+      setShowSummaryButtonOnly(showSummaryBtn);
+
+      setChatMessages(prev => [
+        ...prev, 
+        userMessage, 
+        { 
+          role: 'assistant', 
+          content: assistantResponse,
+          options: (waiting || showSummaryBtn) ? null : ['About Services', 'Projects', 'Company Details', 'Others']
+        }
+      ]);
+      setIsBotTyping(false);
+    }, 800);
   };
 
   const sendChatToWhatsApp = () => {
     const phoneNumber = "916381779723";
-    const summary = chatMessages
-      .map(m => `*${m.role === 'assistant' ? 'Outdid' : 'User'}:* ${m.content}`)
-      .join('\n\n');
+    let message = "";
     
-    const message = `*Chat Summary & Inquiry*\n\n${summary}`;
+    if (lastUserRequirement) {
+      message = `Hi team ! my requirement is : ${lastUserRequirement}`;
+    } else {
+      const summary = chatMessages
+        .map(m => `*${m.role === 'assistant' ? 'Outdid' : 'User'}:* ${m.content}`)
+        .join('\n\n');
+      message = `*Chat Summary*\n\n${summary}`;
+    }
+    
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    setIsSummarySent(true);
+    setShowSummaryButtonOnly(false);
   };
 
   const handleWhatsAppAction = (e) => {
@@ -104,6 +234,13 @@ const ProjectPortfolio = () => {
         .custom-scrollbar::-webkit-scrollbar-thumb {
           background: #FFBF00;
           border-radius: 10px;
+        }
+        @keyframes typing {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+        .typing-dot {
+          animation: typing 1s infinite;
         }
       `}</style>
       
@@ -411,9 +548,31 @@ const ProjectPortfolio = () => {
       )}
 
       {/* Chatbot Interface */}
-      <div className="fixed bottom-8 right-8 z-[120] flex flex-col items-end">
+      <div className="fixed top-32 right-8 z-[120] flex flex-col items-end">
+        {/* Floating Toggle Button */}
+        <div className="relative group mb-6">
+          {!isChatOpen && (
+            <div className="absolute top-1/2 -left-4 -translate-y-1/2 -translate-x-full bg-outdid-amber text-outdid-blue text-[10px] font-black px-4 py-2 rounded-2xl shadow-xl animate-bounce border-2 border-outdid-blue/10 whitespace-nowrap uppercase tracking-widest pointer-events-none">
+              How can I help?
+              <div className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-3 bg-outdid-amber transform rotate-45 border-t-2 border-r-2 border-outdid-blue/10"></div>
+            </div>
+          )}
+          <button 
+            onClick={() => setIsChatOpen(!isChatOpen)}
+            className={`w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-500 hover:scale-110 ${isChatOpen ? 'bg-outdid-amber rotate-90' : 'bg-outdid-blue animate-pulse'}`}
+          >
+            {isChatOpen ? (
+              <svg className="w-8 h-8 text-outdid-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+            ) : (
+              <svg className="w-9 h-9 text-outdid-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+              </svg>
+            )}
+          </button>
+        </div>
+
         {isChatOpen && (
-          <div className="w-80 md:w-96 bg-white rounded-[32px] shadow-2xl border border-gray-100 mb-6 flex flex-col animate-in slide-in-from-bottom-10 duration-500 overflow-hidden">
+          <div className="w-80 md:w-96 bg-white rounded-[32px] shadow-2xl border border-gray-100 flex flex-col animate-in slide-in-from-top-10 duration-500 overflow-hidden">
             {/* Chat Header */}
             <div className="bg-outdid-blue p-6 flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -428,57 +587,89 @@ const ProjectPortfolio = () => {
             {/* Chat Messages */}
             <div className="h-80 overflow-y-auto p-6 space-y-4 custom-scrollbar bg-gray-50/50">
               {chatMessages.map((msg, idx) => (
-                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm font-medium leading-relaxed ${
-                    msg.role === 'user' 
-                    ? 'bg-outdid-amber text-outdid-blue rounded-tr-none' 
-                    : 'bg-white text-outdid-blue shadow-sm border border-gray-100 rounded-tl-none'
-                  }`}>
-                    {msg.content}
+                <div key={idx} className="space-y-2">
+                  <div className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm font-medium leading-relaxed ${
+                      msg.role === 'user' 
+                      ? 'bg-outdid-amber text-outdid-blue rounded-tr-none' 
+                      : 'bg-white text-outdid-blue shadow-sm border border-gray-100 rounded-tl-none'
+                    }`}>
+                      {msg.content}
+                    </div>
                   </div>
+                  {msg.role === 'assistant' && msg.options && (
+                    <div className="flex flex-wrap gap-2 ml-2">
+                      {msg.options.map((opt, i) => (
+                        <button
+                          key={i}
+                          onClick={() => handleOptionClick(opt)}
+                          disabled={msg.optionsDisabled || isBotTyping}
+                          className={`px-3 py-1.5 bg-white border border-outdid-blue/10 text-outdid-blue text-[10px] font-black uppercase tracking-widest rounded-full transition-all shadow-sm ${
+                            msg.optionsDisabled || isBotTyping 
+                            ? 'opacity-50 cursor-not-allowed' 
+                            : 'hover:bg-outdid-amber hover:border-outdid-amber'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
+              {isBotTyping && (
+                <div className="flex justify-start">
+                  <div className="bg-white px-4 py-3 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 flex space-x-1 items-center">
+                    <div className="w-1.5 h-1.5 bg-outdid-blue/30 rounded-full typing-dot" style={{ animationDelay: '0s' }}></div>
+                    <div className="w-1.5 h-1.5 bg-outdid-blue/30 rounded-full typing-dot" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-1.5 h-1.5 bg-outdid-blue/30 rounded-full typing-dot" style={{ animationDelay: '0.4s' }}></div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Chat Input */}
             <div className="p-4 bg-white border-t border-gray-100">
-              <form onSubmit={handleSendMessage} className="flex space-x-2">
-                <input 
-                  type="text" 
-                  value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
-                  placeholder="Type your message..."
-                  className="flex-1 bg-gray-50 border border-gray-100 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-outdid-amber"
-                />
-                <button type="submit" className="p-2 bg-outdid-blue text-white rounded-xl hover:bg-outdid-amber hover:text-outdid-blue transition-all">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+              {isSummarySent ? (
+                <button 
+                  onClick={resetChat}
+                  className="w-full py-3 bg-outdid-blue text-white rounded-xl font-black uppercase tracking-widest text-[9px] flex items-center justify-center space-x-2 hover:bg-outdid-amber hover:text-outdid-blue transition-all shadow-lg shadow-outdid-blue/10"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                  <span>New Chat</span>
                 </button>
-              </form>
+              ) : !showSummaryButtonOnly && (
+                <form onSubmit={handleSendMessage} className="flex space-x-2">
+                  <input 
+                    type="text" 
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    disabled={isBotTyping}
+                    placeholder={isBotTyping ? "Assistant is typing..." : "Type your message..."}
+                    className="flex-1 bg-gray-50 border border-gray-100 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-outdid-amber disabled:opacity-50"
+                  />
+                  <button 
+                    type="submit" 
+                    disabled={isBotTyping || !userInput.trim()}
+                    className="p-2 bg-outdid-blue text-white rounded-xl hover:bg-outdid-amber hover:text-outdid-blue transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                  </button>
+                </form>
+              )}
               
-              <button 
-                onClick={sendChatToWhatsApp}
-                className="w-full mt-4 py-3 bg-green-500 text-white rounded-xl font-black uppercase tracking-widest text-[9px] flex items-center justify-center space-x-2 hover:bg-green-600 transition-all shadow-lg shadow-green-500/10"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span>Finish & Send Summary</span>
-              </button>
+              {showSummaryButtonOnly && (
+                <button 
+                  onClick={sendChatToWhatsApp}
+                  className="w-full py-3 bg-green-500 text-white rounded-xl font-black uppercase tracking-widest text-[9px] flex items-center justify-center space-x-2 hover:bg-green-600 transition-all shadow-lg shadow-green-500/10"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  <span>Finish & Send Summary</span>
+                </button>
+              )}
             </div>
           </div>
         )}
-
-        {/* Floating Toggle Button */}
-        <button 
-          onClick={() => setIsChatOpen(!isChatOpen)}
-          className={`w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-500 hover:scale-110 ${isChatOpen ? 'bg-outdid-amber rotate-90' : 'bg-outdid-blue'}`}
-        >
-          {isChatOpen ? (
-            <svg className="w-8 h-8 text-outdid-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-          ) : (
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
-          )}
-        </button>
       </div>
 
       <footer className="bg-[#020812] py-24 text-center border-t border-white/5">
