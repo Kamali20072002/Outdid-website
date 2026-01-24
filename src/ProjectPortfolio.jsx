@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const ProjectPortfolio = () => {
   const navigate = useNavigate();
-  const [scrollY, setScrollY] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [activeInquiry, setActiveInquiry] = useState(null);
   const [inquiryType, setInquiryType] = useState('Inquiry');
   const [requirements, setRequirements] = useState('');
@@ -186,7 +186,15 @@ const ProjectPortfolio = () => {
   };
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    const handleScroll = () => {
+      const scrolled = window.scrollY;
+      
+      if (scrolled > 50 !== isScrolled) {
+        setIsScrolled(scrolled > 50);
+      }
+      
+      document.documentElement.style.setProperty('--scroll-y', `${scrolled}px`);
+    };
     window.addEventListener('scroll', handleScroll, { passive: true });
     
     // Reveal on scroll logic
@@ -205,12 +213,14 @@ const ProjectPortfolio = () => {
 
     document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
 
-    window.scrollTo(0, 0);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
       observer.disconnect();
     };
+  }, [isScrolled]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -255,16 +265,17 @@ const ProjectPortfolio = () => {
       {/* Header */}
       <header 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrollY > 50 
+          isScrolled 
           ? 'bg-[#020812]/90 backdrop-blur-md border-b border-white/10 shadow-2xl' 
           : 'bg-white/80 backdrop-blur-md border-b border-gray-100'
         }`}
+        style={{ willChange: 'transform, background-color, backdrop-filter' }}
       >
         <div className="mx-auto px-4 md:px-16 lg:px-24 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-12">
             <Link to="/" className="flex items-center group cursor-pointer">
               <div className="bg-white p-1.5 rounded-xl shadow-sm">
-                <img src="/assets/logo/otdlogo.png" alt="Logo" className="h-7 w-auto mix-blend-multiply" />
+                <img src="/assets/logo/otdlogo.png" alt="Logo" className="h-7 w-auto mix-blend-multiply" fetchpriority="high" />
               </div>
             </Link>
 
@@ -275,7 +286,7 @@ const ProjectPortfolio = () => {
             <Link 
               to="/" 
               className={`hidden md:block text-[10px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-full border transition-all ${
-                scrollY > 50 
+                isScrolled 
                 ? 'text-white border-white/20 hover:bg-white hover:text-outdid-blue' 
                 : 'text-outdid-blue border-outdid-blue/10 hover:bg-outdid-blue hover:text-white'
               }`}
@@ -288,7 +299,7 @@ const ProjectPortfolio = () => {
       </header>
 
       {/* Project Portfolio Section */}
-      <section className="bg-white py-32 pt-48 border-b border-gray-100 overflow-hidden">
+      <section className="bg-white py-32 pt-48 border-b border-gray-100">
         <div className="container mx-auto px-6 reveal-up">
           <div className="max-w-4xl mb-24">
             <span className="text-outdid-blue/40 font-black tracking-[0.5em] uppercase text-[10px] mb-6 block">Our Track Record</span>
@@ -408,6 +419,8 @@ const ProjectPortfolio = () => {
                     src={project.img} 
                     alt={project.title} 
                     className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-[#020812]/20 group-hover:bg-transparent transition-colors duration-500"></div>
                   <div className="absolute top-10 left-10">

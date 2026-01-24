@@ -99,7 +99,7 @@ const policies = {
 
 function Home() {
   const navigate = useNavigate();
-  const [scrollY, setScrollY] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [activeMenu, setActiveMenu] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -477,7 +477,14 @@ Comments: ${careerFormData.comments}
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
+          const scrolled = window.scrollY;
+          
+          // Only update state if threshold is crossed to prevent re-renders
+          if (scrolled > 50 !== isScrolled) {
+            setIsScrolled(scrolled > 50);
+          }
+          
+          document.documentElement.style.setProperty('--scroll-y', `${scrolled}px`);
           ticking = false;
         });
         ticking = true;
@@ -520,7 +527,7 @@ Comments: ${careerFormData.comments}
       observer.disconnect();
       clearTimeout(chatTimer);
     };
-  }, []);
+  }, [isScrolled]);
 
   const scrollTo = (ref) => {
     setActiveMenu(null);
@@ -567,10 +574,11 @@ Comments: ${careerFormData.comments}
       {/* Header */}
       <header 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrollY > 50 || activeMenu || mobileMenuOpen 
+          isScrolled || activeMenu || mobileMenuOpen 
           ? 'bg-[#020812]/90 backdrop-blur-md border-b border-white/10 shadow-2xl' 
           : 'bg-transparent'
         }`}
+        style={{ willChange: 'transform, background-color, backdrop-filter' }}
         onMouseLeave={() => setActiveMenu(null)}
       >
         <div className="mx-auto px-4 md:px-16 lg:px-24 h-16 flex items-center justify-between">
@@ -790,22 +798,26 @@ Comments: ${careerFormData.comments}
         <div 
           className="absolute inset-0 opacity-[0.08] pointer-events-none"
           style={{
-            transform: `translateY(${scrollY * 0.1}px) translate(${mousePos.x * 0.2}px, ${mousePos.y * 0.2}px)`,
+            transform: `translateY(calc(var(--scroll-y, 0px) * 0.1)) translate(${mousePos.x * 0.2}px, ${mousePos.y * 0.2}px)`,
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FFBF00' stroke-width='0.5'%3E%3Cpath d='M40 40V0M40 40H0M40 40h40M40 40v40'/%3E%3Ccircle cx='40' cy='40' r='3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '120px 120px'
+            backgroundSize: '120px 120px',
+            willChange: 'transform'
           }}
         ></div>
 
         {/* Layer 2: Animated Data Streams */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
-           <div className="absolute top-[30%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outdid-amber to-transparent animate-pulse" style={{ transform: `translateY(${scrollY * 0.5}px)` }}></div>
-           <div className="absolute top-[70%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outdid-blue to-transparent animate-pulse" style={{ animationDelay: '1s', transform: `translateY(${scrollY * 0.4}px)` }}></div>
+           <div className="absolute top-[30%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outdid-amber to-transparent animate-pulse" style={{ transform: 'translateY(calc(var(--scroll-y, 0px) * 0.5))' }}></div>
+           <div className="absolute top-[70%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outdid-blue to-transparent animate-pulse" style={{ animationDelay: '1s', transform: 'translateY(calc(var(--scroll-y, 0px) * 0.4))' }}></div>
         </div>
 
         {/* Layer 3: Floating High-Tech Components */}
         <div 
           className="absolute inset-0 z-10 pointer-events-none"
-          style={{ transform: `translateY(${scrollY * 0.25}px)` }}
+          style={{ 
+            transform: 'translateY(calc(var(--scroll-y, 0px) * 0.25))',
+            willChange: 'transform'
+          }}
         >
           {/* Capacitor Array */}
           <div 
@@ -824,9 +836,10 @@ Comments: ${careerFormData.comments}
         <div 
           className="absolute inset-0 z-0 opacity-40 scale-110 pointer-events-none"
           style={{
-            transform: `translateY(${scrollY * 0.15}px) scale(${1 + scrollY * 0.0002})`,
+            transform: 'translateY(calc(var(--scroll-y, 0px) * 0.15)) scale(calc(1 + (var(--scroll-y, 0) * 0.0002)))',
             backgroundImage: "url('/assets/image/hero.png')",            backgroundPosition: 'center',
-            backgroundSize: 'cover'
+            backgroundSize: 'cover',
+            willChange: 'transform'
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-[#020812] via-transparent to-[#020812]"></div>
@@ -938,6 +951,8 @@ Comments: ${careerFormData.comments}
                 src="/assets/image/phone2.png" 
                 alt="ionHive Mobile App" 
                 className="relative z-10 w-full max-w-[500px] drop-shadow-[0_0_100px_rgba(255,191,0,0.15)] float-slow"
+                loading="lazy"
+                decoding="async"
               />
               
               
@@ -1028,7 +1043,7 @@ Comments: ${careerFormData.comments}
               </p>
             </div>
             <div className="relative">
-              <img src="/assets/image/ev_home.jpg" alt="EV Charging" className="rounded-[40px] shadow-2xl" />
+              <img src="/assets/image/ev_home.jpg" alt="EV Charging" className="rounded-[40px] shadow-2xl" loading="lazy" decoding="async" />
               <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-outdid-amber rounded-[40px] -z-10 hidden lg:block"></div>
             </div>
           </div>
@@ -1058,7 +1073,7 @@ Comments: ${careerFormData.comments}
             ].map((charger) => (
               <div key={charger.title} className="bg-gray-50 rounded-[40px] p-8 md:p-12 transition-all hover:shadow-xl group">
                 <div className="h-64 mb-8 overflow-hidden rounded-2xl">
-                  <img src={charger.image} alt={charger.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={charger.image} alt={charger.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
                 </div>
                 <h3 className="text-2xl font-black text-outdid-blue mb-4 uppercase tracking-tight">{charger.title}</h3>
                 <p className="text-gray-500 font-light leading-relaxed text-sm">
@@ -1114,6 +1129,8 @@ Comments: ${careerFormData.comments}
                     src={project.img} 
                     alt={project.title} 
                     className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" 
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>

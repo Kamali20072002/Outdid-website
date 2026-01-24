@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Hero = ({ scrollY, mousePos, scrollTo, contactRef }) => {
+const Hero = ({ mousePos, scrollTo, contactRef }) => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#020812]">
       
@@ -8,22 +8,23 @@ const Hero = ({ scrollY, mousePos, scrollTo, contactRef }) => {
       <div 
         className="absolute inset-0 opacity-[0.08] pointer-events-none"
         style={{
-          transform: `translateY(${scrollY * 0.1}px) translate(${mousePos.x * 0.2}px, ${mousePos.y * 0.2}px)`,
+          transform: `translateY(calc(var(--scroll-y, 0px) * 0.1)) translate(${mousePos.x * 0.2}px, ${mousePos.y * 0.2}px)`,
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FFBF00' stroke-width='0.5'%3E%3Cpath d='M40 40V0M40 40H0M40 40h40M40 40v40'/%3E%3Ccircle cx='40' cy='40' r='3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          backgroundSize: '120px 120px'
+          backgroundSize: '120px 120px',
+          willChange: 'transform'
         }}
       ></div>
 
       {/* Layer 2: Animated Data Streams */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
-         <div className="absolute top-[30%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outdid-amber to-transparent animate-pulse" style={{ transform: `translateY(${scrollY * 0.5}px)` }}></div>
-         <div className="absolute top-[70%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outdid-blue to-transparent animate-pulse" style={{ animationDelay: '1s', transform: `translateY(${scrollY * 0.4}px)` }}></div>
+         <div className="absolute top-[30%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outdid-amber to-transparent animate-pulse" style={{ transform: 'translateY(calc(var(--scroll-y, 0px) * 0.5))', willChange: 'transform' }}></div>
+         <div className="absolute top-[70%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outdid-blue to-transparent animate-pulse" style={{ animationDelay: '1s', transform: 'translateY(calc(var(--scroll-y, 0px) * 0.4))', willChange: 'transform' }}></div>
       </div>
 
       {/* Layer 3: Floating High-Tech Components */}
       <div 
         className="absolute inset-0 z-10 pointer-events-none"
-        style={{ transform: `translateY(${scrollY * 0.25}px)` }}
+        style={{ transform: 'translateY(calc(var(--scroll-y, 0px) * 0.25))', willChange: 'transform' }}
       >
         {/* Capacitor Array */}
         <div 
@@ -42,10 +43,11 @@ const Hero = ({ scrollY, mousePos, scrollTo, contactRef }) => {
       <div 
         className="absolute inset-0 z-0 opacity-40 scale-110 pointer-events-none"
         style={{
-          transform: `translateY(${scrollY * 0.15}px) scale(${1 + scrollY * 0.0002})`,
+          transform: 'translateY(calc(var(--scroll-y, 0px) * 0.15)) scale(calc(1 + (var(--scroll-y, 0) * 0.0002)))',
           backgroundImage: "url('/assets/image/hero.png')",
           backgroundPosition: 'center',
-          backgroundSize: 'cover'
+          backgroundSize: 'cover',
+          willChange: 'transform'
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[#020812] via-transparent to-[#020812]"></div>
