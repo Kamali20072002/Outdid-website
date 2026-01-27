@@ -849,7 +849,7 @@ Comments: ${careerFormData.comments}
         <div className="relative z-30 container mx-auto px-6 text-center lg:text-left pt-20">
           <div className="inline-flex items-center space-x-3 mb-8 glass px-6 py-2 rounded-full border-outdid-amber/20">
              <div className="w-2 h-2 rounded-full bg-outdid-amber animate-ping"></div>
-             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">R&D Systemsss</span>
+             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">R&D Systemss</span>
           </div>
           
           <h1 className="text-6xl md:text-9xl font-black mb-8 tracking-tighter leading-[0.85] text-white uppercase selection:text-outdid-amber">
