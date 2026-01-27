@@ -27,6 +27,13 @@ jobs:
           docker buildx build \
             -t kamali20/outdid-website:latest \
             --push \
+
+      - name: Test SSH
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > test_key
+          chmod 600 test_key
+          ssh -i test_key -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo success"
+
             .
 
       # 4️⃣ Deploy to server via SSH
@@ -46,5 +53,6 @@ jobs:
               -p 80:80 \
               --restart always \
               kamali20/outdid-website:latest
+
 
 
