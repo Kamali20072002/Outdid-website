@@ -14,7 +14,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Login to Docker Hub
+      # Step 2: Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -25,7 +25,6 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker buildx build \
-            --platform linux/amd64,linux/arm64 \
             -t kamali20/outdid-website:latest \
             --push \
             .
