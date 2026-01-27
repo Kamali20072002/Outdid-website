@@ -1,4 +1,4 @@
-name: Build and Deploy Outdid Website
+name: Build → Push → Deploy
 
 on:
   push:
@@ -10,22 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker image
+      - name: Build & push image
         run: |
-          docker build -t kamali20/outdid-website:latest .
-
-      - name: Push Docker image
-        run: |
-          docker push kamali20/outdid-website:latest
+          docker buildx build \
+            -t ${{ secrets.IMAGE_NAME }}:latest \
+            --push \
+            .
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.3
@@ -34,11 +33,11 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull kamali20/outdid-website:latest
+            docker pull ${{ secrets.IMAGE_NAME }}:latest
             docker stop outdid-website || true
             docker rm outdid-website || true
             docker run -d \
               --name outdid-website \
               -p 80:80 \
               --restart always \
-              kamali20/outdid-website:latest
+              ${{ secrets.IMAGE_NAME }}:latest
