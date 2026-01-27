@@ -27,6 +27,8 @@ jobs:
           docker buildx build \
             -t kamali20/outdid-website:latest \
             --push \
+            .
+
 
       - name: Test SSH
         run: |
