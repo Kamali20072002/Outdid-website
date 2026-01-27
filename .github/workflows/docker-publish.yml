@@ -29,6 +29,9 @@ jobs:
             --push \
             .
 
+      - name: Debug SSH host
+        run: |
+          echo "SERVER_HOST=${{ secrets.SERVER_HOST }}"
 
       - name: Test SSH
         run: |
@@ -36,10 +39,6 @@ jobs:
           chmod 600 test_key
           ssh -i test_key -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo success"
 
-
-      - name: Debug SSH host
-        run: |
-          echo "SERVER_HOST=${{ secrets.SERVER_HOST }}"
 
 
       # 4️⃣ Deploy to server via SSH
